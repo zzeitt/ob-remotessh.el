@@ -1,10 +1,38 @@
 ;;; ob-remotessh.el --- Execute commands in remote machine via ssh, all inside babel.  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2024  
+;; Copyright (C) 2024 
 
-;; Author:  zeit
+;; Author: zeit
 ;; Keywords: processes, terminals
 ;; Version: 1.0.0
+;; URL: https://github.com/zzeitt/ob-remotessh
+
+;;; Commentary:
+;; Run commands in HOST with RS babel.
+;;
+;; Borrowed some codes from the followings:
+;;   - https://git.sr.ht/~bzg/worg/tree/master/item/org-contrib/babel/ob-template.el
+;;   - https://github.com/rkiggen/ob-powershell
+;;
+;;
+;; Attention:
+;;   - To suppress banner message, touch a ~/.hushlogin file (in your home directory).
+;;   - DO NOT RUN DANGER COMMANDS!!! (E.g. rm -rf *)
+;;
+;;
+;; Description:
+;; #+begin_src rs :host <your_machine> :path ~ :var today="Hello, human, today is `date '+%Y-%m-%d'`."
+;;   echo $today
+;; #+end_src
+;;
+;; #+RESULTS:
+;; : Hello, human, today is 2024-09-10.
+;;
+
+;;; Change Log:
+;;   2024.09.10: Created this file.
+;;   2024.09.11: Fixed '^M' issue.
+;;
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -19,37 +47,11 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-;;; Commentary:
-;; Run commands in HOST with RS babel.
-;;
-;; Borrowed some codes from the followings:
-;;   - https://git.sr.ht/~bzg/worg/tree/master/item/org-contrib/babel/ob-template.el
-;;   - https://github.com/rkiggen/ob-powershell
-;;
-
-;; Attention:
-;;   - To suppress banner message, touch a ~/.hushlogin file (in your home directory).
-;;   - DO NOT RUN DANGER COMMANDS!!! (E.g. rm -rf *)
-;;
-
-;; Usage:
-;; #+begin_src rs :host <your_machine> :path ~ :var today="Hello, human, today is `date '+%Y-%m-%d'`."
-;;   echo $today
-;; #+end_src
-;;
-;; #+RESULTS:
-;; : Hello, human, today is 2024-09-10.
-;;
-
-;; Changelog:
-;;   2024.09.10: Created this file.
-;;   2024.09.11: Fixed '^M' issue.
-;;
-
-;; 
-(require 'ob)
+;; This file is *NOT* part of GNU Emacs.
 
 ;;; Code:
+
+(require 'ob)
 (add-to-list 'org-src-lang-modes '("rs" . sh))
 (add-to-list 'org-structure-template-alist '("r" . "src rs"))
 
