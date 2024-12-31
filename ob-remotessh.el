@@ -86,7 +86,7 @@
       (insert cmd-remote)
       )
     (setq cmd-local
-          (format "ssh -T %s < %s %s"
+          (format "ssh -o ConnectTimeout=4 -T %s < %s %s"
                   host
                   (org-babel-process-file-name tmp-file)
                   (if out-file (format "> %s" out-file)
